@@ -1,0 +1,209 @@
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+    .cancelbtn {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+.tabbing .nav {
+  max-width: 168px;
+}
+.tabbing .nav-item{
+  font-size: 14px;
+}
+.list-items {
+  width: 87%;
+  }
+    .menu-link{
+    color: #000;
+  }
+
+}
+
+
+ @media only screen and (min-width: 768px) and (max-width: 1200px)  {
+
+.nav .nav-links {
+  font-size: 11px;
+}
+
+  }
+
+
+@media screen and (max-width: 768px) {
+  .col-sm-12{
+    width: 100%;
+  }
+.record-line  img{
+  margin: 20px auto;
+}
+.tab-content .text-right {
+  text-align: center;
+}
+  .burger.is-active {
+  background-color: var(--dark-blue) !important;
+  border-radius: 100px;
+  padding: 10px;
+  height: 30px;
+  width: 30px;
+}
+  .list-items {
+  width: 90%;
+  }
+  .tab-content{
+    padding: 0 15px;
+  }
+  .record-line{
+    text-align: center;
+  }
+   .tabbing [class^="uil-"]::before,.tabbing [class*=" uil-"]::before {
+    line-height: 24px !important;
+  }
+  .template-list [class^="uil-"]::before,.template-list [class*=" uil-"]::before {
+    line-height: 34px !important;
+  }
+     .inner-page-class [class^="uil-"]::before,.inner-page-class [class*=" uil-"]::before {
+    line-height: 34px !important;
+  }
+  .copyright {
+  bottom: auto;
+}
+    .nav .search-box {
+  margin:10px 0 ;
+}
+  .nav .search-box {
+    right: 0 !important;
+    max-width: 214px !important;
+  }
+  .heading{
+    margin-top: 50px;
+  }
+  .add-block {
+  height: 50vh;
+}
+.plus-btn {
+  height: 80px;
+  max-width: 80px;
+  }
+  .search-box input {
+  color: black;
+}
+  .center-title{
+   width: 100%;
+  }
+  p,.date {
+  font-size: 14px;
+}
+  .mt-20{
+  	margin-top: 20px !important;
+  }
+   .mb-20{
+  	margin-bottom: 20px !important;
+  }
+   .pt-20{
+  	padding-top: 20px !important;
+  }
+   .pb-20{
+  	padding-bottom: 20px !important;
+  }
+  .login-form img {
+  max-width: 149px;
+  margin: 0 auto;
+}
+.mp-5{
+padding: 20px !important;
+}
+ .nav .navOpenBtn,
+  .nav .navCloseBtn {
+    display: block;
+  }
+  .nav {
+    padding: 15px 20px;
+  }
+  .nav .nav-links {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    max-width: 280px;
+    width: 100%;
+    padding-top: 100px;
+    row-gap: 30px;
+    flex-direction: column;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    z-index: 999;
+    background: #fff;
+  }
+  .nav.openNav .nav-links {
+    left: -53px;
+  }
+  .nav .navOpenBtn {
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .nav .nav-links a{
+    color: #000;
+  }
+  .nav .navCloseBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #353842;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .nav .search-box {
+    top: calc(100% + 10px);
+    max-width: calc(100% - 20px);
+    right: 50%;
+    transform: translateX(50%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+[class^="uil-"]::before, [class*=" uil-"]::before {
+  line-height: 62px !important;
+.menu-link.tab-pane [class^="uil-"]::before,.tab-pane  [class*=" uil-"]::before {
+  line-height: 25px !important;
+}
+.main-body {
+  padding-top: 140px;
+  padding-left: 20px;
+  padding-right: 20px;
+  }
+  .record-line{
+  text-align: center;
+}
+.col-sm-12 {
+  width: 100%;
+}
+.record-line img{
+  text-align: center;
+  width: 100%;
+  max-width: 100px;
+  margin: 0 auto 20px;
+}
+
+}
+/* responsive */
+@media screen and (max-width: 1160px) {
+  .nav {
+    padding: 15px 100px;
+  }
+  .nav .search-box {
+    right: 150px;
+  }
+}
+@media screen and (max-width: 950px) {
+  .nav {
+    padding: 15px 50px;
+  }
+  .nav .search-box {
+    right: 100px;
+    max-width: 400px;
+  }
+}
