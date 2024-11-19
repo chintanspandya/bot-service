@@ -11,7 +11,7 @@
             </div>
 
             <div class="d-flex flex-wrap three-block justify-content-center mt-5 mb-5">
-                <a href="##" class="d-block col-md-4 col-sm-12 pe-5 ps-5 mb-5 mt-3">
+                <a href="{{ route('template.index') }}" class="d-block col-md-4 col-sm-12 pe-5 ps-5 mb-5 mt-3">
                     <div class=" inner-box  dark-grey text-center ps-5 pe-5 p-3 border-radius "><img
                             src="{{ asset('/') }}images/templates.png"></div>
                     <h4 class="text-center mt-3 text-black">Templates</h4>

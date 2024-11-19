@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
-<meta name="description" content="Free Web tutorials">
-<meta name="keywords" content="HTML, CSS, JavaScript">
-<meta name="author" content="John Doe">
+<meta name="description" content="AspireEdge is a renowned mobile app and web development agency in UK. We can lead your business to a whole new level with our custom mobile and web development solutions to a broad array of industries.">
+{{-- <meta name="keywords" content="HTML, CSS, JavaScript"> --}}
+<meta name="author" content="AspireEdge Solutions Pvt. Ltd.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="{{ asset('/images/logo.ico') }}">
 <!--css-->
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">

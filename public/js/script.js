@@ -3,79 +3,93 @@ const nav = document.querySelector(".nav"),
   navOpenBtn = document.querySelector(".navOpenBtn"),
   navCloseBtn = document.querySelector(".navCloseBtn");
 
-searchIcon.addEventListener("click", () => {
-  nav.classList.toggle("openSearch");
-  nav.classList.remove("openNav");
-  if (nav.classList.contains("openSearch")) {
-    return searchIcon.classList.replace("uil-search", "uil-times");
-  }
-  searchIcon.classList.replace("uil-times", "uil-search");
-});
+// searchIcon.addEventListener("click", () => {
+//   nav.classList.toggle("openSearch");
+//   nav.classList.remove("openNav");
+//   if (nav.classList.contains("openSearch")) {
+//     return searchIcon.classList.replace("uil-search", "uil-times");
+//   }
+//   searchIcon.classList.replace("uil-times", "uil-search");
+// });
 
-navOpenBtn.addEventListener("click", () => {
-  nav.classList.add("openNav");
-  nav.classList.remove("openSearch");
-  searchIcon.classList.replace("uil-times", "uil-search");
-});
-navCloseBtn.addEventListener("click", () => {
-  nav.classList.remove("openNav");
-});
+// navOpenBtn.addEventListener("click", () => {
+//   nav.classList.add("openNav");
+//   nav.classList.remove("openSearch");
+//   searchIcon.classList.replace("uil-times", "uil-search");
+// });
+// navCloseBtn.addEventListener("click", () => {
+//   nav.classList.remove("openNav");
+// });
 
 
 
 /*multiple checkbox - drop down*/
-const selectBtn = document.querySelector(".select-btn"),
+const selectBtn = $(".select-btn"),
       items = document.querySelectorAll(".item");
 
-selectBtn.addEventListener("click", () => {
-    selectBtn.classList.toggle("open");
-});
+$(".select-btn").on("click", function() {
 
-items.forEach(item => {
-    item.addEventListener("click", () => {
-        item.classList.toggle("checked");
-
-        let checked = document.querySelectorAll(".checked"),
-            btnText = document.querySelector(".btn-text");
-
-            if(checked && checked.length > 0){
-                btnText.innerText = `${checked.length} Selected`;
-            }else{
-                btnText.innerText = "Select Language";
-            }
-    });
+    $(this).toggleClass("open");
 })
+
+// items.forEach(item => {
+//     item.addEventListener("click", () => {
+//         item.classList.toggle("checked");
+
+//         let checked = document.querySelectorAll(".checked"),
+//             btnText = document.querySelector(".btn-text");
+
+//             if(checked && checked.length > 0){
+//                 btnText.innerText = `${checked.length} Selected`;
+//             }else{
+//                 btnText.innerText = "Select Language";
+//             }
+//     });
+// })
+
+$(".item").click(function(e) {
+    $(this).toggleClass("checked");
+
+    let checked = $(this).closest('.list-items').find(".checked"),
+        btnText = $(e.target).closest('.list-items').siblings(".select-btn").find(".btn-text");
+
+    if (checked.length > 0) {
+        btnText.text(`${checked.length} Selected`);
+    } else {
+        btnText.text(btnText.data("btn-text"));
+    }
+});
 
 
 
 
 /*ck-editor*/
-var editor = CKEDITOR.replace( 'editor1', {
-  height: 300,
-  extraPlugins: 'mentions',
-  mentions: [ {
-      feed: dataFeed,
-      itemTemplate:
-        '<li data-id="{id}">' +
-        '<strong class="username">{username}</strong>' +
-        '<span class="fullname">{fullname}</span>' +
-        '</li>',
-      outputTemplate:
-        '<a href="mailto:{username}@example.com">@{username}</a><span>&nbsp;</span>',
-      minChars: 0
-    }
-  ]
-} );
+// var editor = CKEDITOR.replace( 'editor1', {
+//   height: 300,
+//   extraPlugins: 'mentions',
+//   mentions: [ {
+//       feed: dataFeed,
+//       itemTemplate:
+//         '<li data-id="{id}">' +
+//         '<strong class="username">{username}</strong>' +
+//         '<span class="fullname">{fullname}</span>' +
+//         '</li>',
+//       outputTemplate:
+//         '<a href="mailto:{username}@example.com">@{username}</a><span>&nbsp;</span>',
+//       minChars: 0
+//     }
+//   ]
+// } );
 
-editor.on( 'instanceReady', function ( evt ) {
-  // Attach to evey mentions instance.
-  CKEDITOR.tools.array.forEach( evt.editor.plugins.mentions.instances, function( mentionsInstance ) {
-    // See https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_plugins_autocomplete_model.html#event-change-isActive.
-    mentionsInstance._autocomplete.model.on( 'change-isActive', function( evt ) {
-      console.log( evt.data ); // True if panel is visible, false otherwise.
-    } );
-  } );
-}, null, null, 11 ); // We need higher priority than default one (10), since instances are created in the same event listener with default priority.
+// editor.on( 'instanceReady', function ( evt ) {
+//   // Attach to evey mentions instance.
+//   CKEDITOR.tools.array.forEach( evt.editor.plugins.mentions.instances, function( mentionsInstance ) {
+//     // See https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_plugins_autocomplete_model.html#event-change-isActive.
+//     mentionsInstance._autocomplete.model.on( 'change-isActive', function( evt ) {
+//       console.log( evt.data ); // True if panel is visible, false otherwise.
+//     } );
+//   } );
+// }, null, null, 11 ); // We need higher priority than default one (10), since instances are created in the same event listener with default priority.
 
 // Sample mentions data.
 var users = [
@@ -224,7 +238,7 @@ $(document).ready(function() {
 
         if (!$('#dataConfirmModal').length) {
             $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
-        } 
+        }
         $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
         $('#dataConfirmOK').attr('href', href);
         $('#dataConfirmModal').modal({show:true});

@@ -72,7 +72,7 @@ video {
 
 .white-text
 {
- color: var(--white-text); 
+ color: var(--white-text);
 }
 .text-22{
   font-size: 22px;
@@ -222,12 +222,12 @@ span.psw {
   max-width: 640px;
   width: 100%;
 }
-.copyright{
+/* .copyright{
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-}
+} */
 
 .nav {
   position: fixed;
@@ -365,8 +365,8 @@ a {
   top: 50%;
   right: 15px;
   transform: translateY(-50%);
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 5px solid #fff;
@@ -393,11 +393,11 @@ a {
 
 .dd-input + .dd-menu {
   display: none;
-} 
+}
 
 .dd-input:checked + .dd-menu {
   display: block;
-} 
+}
 
 .dd-menu li {
   padding: 10px 20px;
@@ -422,6 +422,7 @@ a {
 
 .main-body{
   padding-top: 130px;
+  min-height: 90vh;
 }
 .tabbing .nav {
   position: initial;
@@ -704,7 +705,7 @@ table th {
   table caption {
     font-size: 1.3em;
   }
-  
+
   table thead {
     border: none;
     clip: rect(0 0 0 0);
@@ -715,20 +716,20 @@ table th {
     position: absolute;
     width: 1px;
   }
-  
+
   table tr {
     border-bottom: 3px solid #ddd;
     display: block;
     margin-bottom: .625em;
   }
-  
+
   table td {
     border-bottom: 1px solid #ddd;
     display: block;
     font-size: .8em;
     text-align: center;
   }
-  
+
   table td::before {
     /*
     * aria-label has no advantage, it won't be read inside a table
@@ -739,7 +740,7 @@ table th {
     font-weight: bold;
     text-transform: uppercase;
   }
-  
+
   table td:last-child {
     border-bottom: 0;
   }

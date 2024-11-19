@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\Admin\AdministratorController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MyProfileController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\TemplateController;
+use App\Http\Controllers\Admin\AdministratorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,9 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('admin')->group(function () {
         Route::get('/', [AdministratorController::class, 'index'])->name('admin.index');
+
+        Route::resource('user', UserController::class);
+        Route::resource('template', TemplateController::class);
     });
 
     Route::get('/my-profile', [MyProfileController::class, 'index'])->name('my-profile');
