@@ -31,7 +31,7 @@
                             src="{{ asset('/') }}images/payments.png"></div>
                     <h4 class="text-center mt-3 text-black">Payments</h4>
                 </a>
-                <a href="##" class="d-block col-md-4 col-sm-12 pe-5 ps-5 mb-5 mt-3">
+                <a href="{{ route('user.index') }}" class="d-block col-md-4 col-sm-12 pe-5 ps-5 mb-5 mt-3">
                     <div class=" inner-box  dark-grey text-center ps-5 pe-5 p-3 border-radius "><img
                             src="{{ asset('/') }}images/users.png"></div>
                     <h4 class="text-center mt-3 text-black">Users</h4>

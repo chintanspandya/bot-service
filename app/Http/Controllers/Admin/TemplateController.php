@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
 use App\Models\Question;
 use App\Models\Template;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class TemplateController extends Controller
 {
@@ -32,7 +35,39 @@ class TemplateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->message == "<p>&nbsp;</p>") {
+            $request->request->remove('message');
+        }
+        // dd($request->all());
+        $request->validate([
+            'title' => 'required|min:3',
+            'template_type' => 'required',
+            'message' => 'required',
+            'questions' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+
+            $template = Template::create([
+                'user_id' => auth()->user()->id,
+                'title' => $request->title,
+                'template_type' => $request->template_type,
+                'message' => $request->message,
+            ]);
+
+            if ($request->questions) {
+                $template->questions()->attach(explode(',', $request->questions));
+            }
+
+            DB::commit();
+
+            return redirect()->route('template.index')->with('success', 'Template created successfully.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Error creating template: ' . $e->getMessage(), [$e]);
+            return redirect()->back()->withErrors(['title' => $e->getMessage()])->withInput();
+        }
     }
 
     /**

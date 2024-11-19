@@ -549,7 +549,7 @@ min-height: 70vh;
   z-index: 9;
   width: 659px;
 }
-.select-btn.open ~ .list-items{
+.select-btn.open + .list-items{
     display: block;
 }
 

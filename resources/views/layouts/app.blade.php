@@ -14,7 +14,12 @@
 <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
 @stack('styles')
 <link rel="stylesheet" href="{{ asset('css/menu.style.css') }}">
-
+<style>
+    .error{
+        color: red;
+        font-size: 0.85rem;
+    }
+</style>
 
 <head>
     <title>@yield('title') - {{ config('app.name') }}</title>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -12,7 +13,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $index['users'] = User::latest()->paginate(10);
+        return view('admin.users.index', $index);
     }
 
     /**
@@ -20,7 +22,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
+
     }
 
     /**

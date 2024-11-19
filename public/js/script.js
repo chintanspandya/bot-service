@@ -27,9 +27,12 @@ const nav = document.querySelector(".nav"),
 const selectBtn = $(".select-btn"),
       items = document.querySelectorAll(".item");
 
-$(".select-btn").on("click", function() {
-
-    $(this).toggleClass("open");
+$(".select-btn").click(function() {
+    // $(this).on("click", function() {
+        $(".select-btn").removeClass("open");
+        $(this).toggleClass("open");
+        console.log($(this))
+    // })
 })
 
 // items.forEach(item => {
@@ -49,9 +52,30 @@ $(".select-btn").on("click", function() {
 
 $(".item").click(function(e) {
     $(this).toggleClass("checked");
+    let input = $(this).siblings(".hidden_checkbox_input");
+
+    if($(this).hasClass("checked")) {
+        // item is selected so add item to hidden list
+        if(input.val() !== "") {
+            let items = input.val().split(",");
+            items.push($(this).find(".item-text").text().toLowerCase());
+            input.val(items.join(","));
+        } else{
+            input.val($(this).find(".item-text").text().toLowerCase());
+
+        }
+    } else {
+        // item is un selected so removed item from hidden list
+        let items = input.val().split(","),
+            index = items.indexOf($(this).find(".item-text").text().toLowerCase());
+        if (index > -1) {
+            items.splice(index, 1);
+            input.val(items.join(","));
+        }
+    }
 
     let checked = $(this).closest('.list-items').find(".checked"),
-        btnText = $(e.target).closest('.list-items').siblings(".select-btn").find(".btn-text");
+        btnText = $(e.target).closest('.list-items').prev(".select-btn").find(".btn-text");
 
     if (checked.length > 0) {
         btnText.text(`${checked.length} Selected`);
