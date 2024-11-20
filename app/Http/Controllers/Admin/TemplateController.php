@@ -83,7 +83,9 @@ class TemplateController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $index['template'] = Template::findOrFail($id);
+        $index['questions'] = Question::latest()->get();
+        return view('admin.templates.edit', $index);
     }
 
     /**

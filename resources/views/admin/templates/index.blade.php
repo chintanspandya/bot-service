@@ -45,7 +45,7 @@
                         <td data-label="Amount">{{ $template->created_at->format('Y-m-d') }}</td>
                         <td>
                             <div class=" d-flex justify-content-center text-right">
-                                <a href="##" class="d-block back-blue p-3 pt-2 pb-2 border-radius me-2"> <i
+                                <a href="{{ route('template.edit', $template->id) }}" class="d-block back-blue p-3 pt-2 pb-2 border-radius me-2"> <i
                                         class="uil uil-pen white-text"></i></a>
                                 <a href="#" data-href="delete.php?id=23" data-bs-toggle="modal"
                                     data-bs-target="#confirm-delete"

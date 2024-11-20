@@ -6,6 +6,7 @@
 @section('content')
 <section class="main-body tabbing">
     <div class="container">
+        @include('includes.alerts')
         <ul class="nav nav-tabs border-bottom mt-2" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"

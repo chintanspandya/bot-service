@@ -6,7 +6,7 @@
 @section('content')
     <section class="main-body inner-page-class">
         <div class="container">
-            <div class="d-flex heading justify-content-center align-items-center">
+            <div class="d-flex heading mt-3 align-items-center">
                 <a href="{{ route('user.index') }}"
                     class="d-block back-blue back-button d-flex justify-content-center align-items-center "><i
                         class="uil uil-angle-left white-text"></i></a>

@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     use HasFactory;
-    
+
     protected $guarded = ['id'];
+
+    public function answers(){
+        return $this->hasMany(QuestionAnswer::class);
+    }
+
+    public function templates(){
+        return $this->belongsToMany(Template::class, 'templates_questions');
+    }
 
 }
