@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create User')
+@section('title', 'Edit User')
 
 
 @section('content')
@@ -11,34 +11,35 @@
                     class="d-block back-blue back-button d-flex justify-content-center align-items-center "><i
                         class="uil uil-angle-left white-text"></i></a>
                 <div class="text-center col-md-11 center-title">
-                    <h2 class="m-0">Create User</h2>
+                    <h2 class="m-0">Edit User</h2>
                 </div>
             </div>
             @include('includes.alerts')
 
             <div class="col-md-6 m-auto pt-5">
-                <form action="{{ route('user.store') }}" id="form" method="POST">
+                <form action="{{ route('user.update', $user->id) }}" id="form" method="POST">
+                    @method('PUT')
                     @csrf
                     <input type="text" placeholder="Enter Name" name="name" required=""
                         class="border-radius {{ !$errors->has('name') ? 'mb-5' : 'mb-0' }} mb-20 dark-grey"
-                        value="{{ old('name') }}">
+                        value="{{ old('name', $user->name) }}">
                     @error('name')
                         <span class="d-block error mb-4">{{ $message }}</span>
                     @enderror
 
                     <input type="text" placeholder="Enter Email" name="email" required=""
                     class="border-radius {{ !$errors->has('email') ? 'mb-5' : 'mb-0' }} mb-20 dark-grey"
-                    value="{{ old('email') }}">
+                    value="{{ old('email', $user->email) }}">
                     @error('email')
                         <span class="d-block error mb-4">{{ $message }}</span>
                     @enderror
 
                     <select name="role" required=""
-                    class="border-radius w-100 {{ !$errors->has('name') ? 'mb-5' : 'mb-0' }} mb-20 dark-grey">
+                    class="border-radius w-100 {{ !$errors->has('role') ? 'mb-5' : 'mb-0' }} mb-20 dark-grey">
                         <option value="">Select Job Title</option>
-                        <option value="admin">Admin</option>
-                        <option value="manager">Manager</option>
-                        <option value="user">User</option>
+                        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="manager" {{ old('role', $user->role) == 'manager' ? 'selected' : '' }}>Manager</option>
+                        <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User</option>
 
                     </select>
                     @error('role')
@@ -47,25 +48,11 @@
 
                     <input type="text" placeholder="Enter Contact Number" name="contact_no" required=""
                     class="border-radius {{ !$errors->has('contact_no') ? 'mb-5' : 'mb-0' }} mb-20 dark-grey"
-                    value="{{ old('contact_no') }}">
+                    value="{{ old('contact_no', $user->contact_no) }}">
                     @error('contact_no')
                         <span class="d-block error mb-4">{{ $message }}</span>
                     @enderror
 
-
-                    <input type="password" placeholder="Enter Password" name="password" required=""
-                    class="border-radius {{ !$errors->has('password') ? 'mb-5' : 'mb-0' }} mb-20 dark-grey"
-                    value="{{ old('password') }}">
-                    @error('password')
-                        <span class="d-block error mb-4">{{ $message }}</span>
-                    @enderror
-
-                    <input type="password" placeholder="Confirm Password" name="password_confirmation" required=""
-                    class="border-radius {{ !$errors->has('password_confirmation') ? 'mb-5' : 'mb-0' }} mb-20 dark-grey"
-                    value="{{ old('password_confirmation') }}">
-                    @error('password_confirmation')
-                        <span class="d-block error mb-4">{{ $message }}</span>
-                    @enderror
 
 
 
@@ -130,12 +117,4 @@
             })
         })
     </script>
-@endpush
-
-@push('css')
-    <style>
-        select:hover, select:focus{
-            border: 1px solid #fff;
-        }
-    </style>
 @endpush

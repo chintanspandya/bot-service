@@ -21,6 +21,8 @@
     }
 </style>
 
+@stack('css')
+
 <head>
     <title>@yield('title') - {{ config('app.name') }}</title>
 </head>
