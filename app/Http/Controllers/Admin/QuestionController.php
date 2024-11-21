@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Question;
+use App\Models\Questionaire;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $index['questions'] = Question::with('answers')->latest()->paginate(10);
+        $index['questions'] = Questionaire::with('questions.answers')->latest()->paginate(10);
         return view('admin.questions.index', $index);
     }
 
@@ -25,8 +26,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        $index['questions'] = Question::latest()->get();
-        return view('admin.questions.create', $index);
+        return view('admin.questions.create');
     }
 
     /**
@@ -36,29 +36,37 @@ class QuestionController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'question' => 'required|min:3',
-            'answers' => 'required|min:1',
-            'answers.*.input' => 'required',
+            'questions' => 'required|min:1',
+            'questions.*.input' => 'required|min:3', // min 3 characters
+            'questions.*.answers' => 'required|min:1',
+            'questions.*.answers.*.input' => 'required',
         ]);
 
         DB::beginTransaction();
         try {
 
-            $question = Question::create([
-                'question' => $request->question,
+            $questionaire = Questionaire::create([
+                'title' => $request->questionaire,
             ]);
 
-            if ($request->answers) {
-                foreach ($request->answers as $answer) {
-                    $question->answers()->create([
-                        'answer' => $answer['input'],
-                    ]);
+            foreach ($request->questions as $key => $req_question) {
+                $question = Question::create([
+                    'questionaire_id' => $questionaire->id,
+                    'question' => $req_question['input'],
+                ]);
+
+                if (isset($req_question['answers'])) {
+                    foreach ($req_question['answers'] as $req_answer) {
+                        $question->answers()->create([
+                            'answer' => $req_answer['input'],
+                        ]);
+                    }
                 }
             }
 
             DB::commit();
 
-            return redirect()->route('question.index')->with('success', 'Question created successfully.');
+            return redirect()->route('question.index')->with('success', 'Questionaire created successfully.');
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('Error creating question: ' . $e->getMessage(), [$e]);
@@ -79,7 +87,7 @@ class QuestionController extends Controller
      */
     public function edit(string $id)
     {
-        $index['question'] = Question::with('answers')->findOrFail($id);
+        $index['questionaire'] = Questionaire::with('questions.answers')->findOrFail($id);
         return view('admin.questions.edit', $index);
     }
 
@@ -90,44 +98,73 @@ class QuestionController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'question' => 'required|min:3',
-            'answers' => 'required|min:1',
-            'answers.*.input' => 'required',
+            'questions' => 'required|min:1',
+            'questions.*.input' => 'required|min:3', // min 3 characters
+            'questions.*.answers' => 'required|min:1',
+            'questions.*.answers.*.input' => 'required',
         ]);
 
         DB::beginTransaction();
         try {
 
-            $question = Question::findOrFail($id);
+            $questionaire = Questionaire::findOrFail($id);
 
-            $question->update([
-                'question' => $request->question,
-            ]);
-
-            if ($request->answers) {
-                $question->answers()->whereNotIn('id', array_column($request->answers, 'id'))->delete();
-
-                foreach ($request->answers as $answer) {
-                    if (isset($answer['id'])) {
-                        $question->answers()->where('id', $answer['id'])->update([
-                            'answer' => $answer['input'],
-                        ]);
-                    } else {
-                        $question->answers()->create([
-                            'answer' => $answer['input'],
-                        ]);
+            if ($request->questions) {
+                if (count(array_column($request->questions, 'id') ?? []) > 0) {
+                    // QuestionAnswer::where('questionaire_id', $questionaire->id)
+                    // ->delete();
+                    $q = Question::where('questionaire_id', $questionaire->id)
+                        ->whereNotIn('id', array_column($request->questions, 'id'))
+                        ->get();
+                    foreach ($q as $_q) {
+                        $_q->answers()->delete();
+                        $_q->delete();
                     }
                 }
-            } else {
-                $question->answers()->delete();
+                foreach ($request->questions as $key => $req_question) {
+                    if (isset($req_question['id'])) {
+                        $question = Question::findOrFail($req_question['id']);
+                        $question->update([
+                            'question' => $req_question['input'],
+                        ]);
+                    } else {
+                        $question = Question::create([
+                            'question' => $req_question['input'],
+                            'questionaire_id' => $questionaire->id,
+                        ]);
+                    }
+
+                    if (isset($req_question['answers'])) {
+                        $question->answers()
+                            ->whereNotIn('id', array_column($req_question['answers'], 'id'))
+                            ->delete();
+
+                        foreach ($req_question['answers'] as $req_answer) {
+                            if (isset($req_answer['id'])) {
+                                $question->answers()
+                                    ->where('id', $req_answer['id'])
+                                    ->update([
+                                        'answer' => $req_answer['input'],
+                                    ]);
+                            } else {
+                                $question->answers()
+                                    ->create([
+                                        'answer' => $req_answer['input'],
+                                    ]);
+                            }
+                        }
+                    } else {
+                        $question->answers()->delete();
+                    }
+                }
             }
 
             DB::commit();
 
-            return redirect()->route('question.index')->with('success', 'Question created successfully.');
+            return redirect()->route('question.index')->with('success', 'Questionaire created successfully.');
         } catch (Exception $e) {
             DB::rollBack();
-            Log::error('Error creating question: ' . $e->getMessage(), [$e]);
+            Log::error('Error creating questionaire: ' . $e->getMessage(), [$e]);
             return redirect()->back()->withErrors(['title' => $e->getMessage()])->withInput();
         }
     }
@@ -137,14 +174,18 @@ class QuestionController extends Controller
      */
     public function destroy(string $id)
     {
-        $question = Question::with('templates')->findOrFail($id);
+        $questionaire = Questionaire::with(['templates', 'questions.answers'])->findOrFail($id);
 
-        if ($question->templates->count()) {
-            return redirect()->route('question.index')->with('error', 'Unable to delete this question, because question is used in templates!');
+        if ($questionaire->templates->count()) {
+            return redirect()->route('question.index')->with('error', 'Unable to delete this questionaire, because questionaire is used in templates!');
         }
-        $question->answers()->delete();
-        $question->delete();
+        foreach ($questionaire->questions as $key => $question) {
+            # code...
+            $question->answers()->delete();
+        }
+        $questionaire->questions()->delete();
+        $questionaire->delete();
 
-        return redirect()->route('question.index')->with('success', 'Question deleted successfully');
+        return redirect()->route('question.index')->with('success', 'Questionaire deleted successfully');
     }
 }

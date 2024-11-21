@@ -12,7 +12,7 @@
                     class="col-md-1 d-block back-blue back-button d-flex justify-content-center align-items-center "><i
                         class="uil uil-angle-left white-text"></i></a>
                 <div class="text-center col-md-9 col-sm-12 center-title">
-                    <h2 class="m-0">Questions</h2>
+                    <h2 class="m-0">Questionaries</h2>
                 </div>
                 <div class="text-center col-md-2 col-sm-12 center-title"><a href="{{ route('question.create') }}"
                         class="m-0 text-decoration-underline">Create New</a></div>
@@ -25,8 +25,8 @@
 
                 <thead>
                     <tr>
-                        <th scope="col" class="text-left">Question</th>
-                        <th scope="col">Asnwers</th>
+                        <th scope="col" class="text-left">Questionaire Title</th>
+                        <th scope="col">Questions</th>
                         <th scope="col">Created At</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -35,8 +35,8 @@
                     @foreach ($questions as $question)
                     <tr>
 
-                        <td data-label="Account" class="text-left">{{ $question->question }} </td>
-                        <td data-label="Amount">{{ implode(', ', $question->answers->pluck('answer')->toArray()) }}</td>
+                        <td data-label="Account" class="text-left">{{ $question->title }} </td>
+                        <td data-label="Amount">{{ implode(', ', $question->questions->pluck('question')->toArray()) }}</td>
                         <td data-label="Amount">{{ $question->created_at->format('Y-m-d') }}</td>
                         <td>
                             <div class=" d-flex justify-content-center text-right">
