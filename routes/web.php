@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\TemplateController;
 use App\Http\Controllers\Admin\AdministratorController;
 
@@ -32,9 +33,12 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('user', UserController::class);
         Route::resource('template', TemplateController::class);
+        Route::resource('question', QuestionController::class);
     });
 
     Route::get('/my-profile', [MyProfileController::class, 'index'])->name('my-profile');
+    Route::post('/my-profile', [MyProfileController::class, 'update'])->name('my-profile.update');
+    Route::post('/change-password', [MyProfileController::class, 'change_password'])->name('my-profile.change-password');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

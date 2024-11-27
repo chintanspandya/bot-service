@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Models\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class MyProfileController extends Controller
 {
@@ -35,7 +37,7 @@ class MyProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('my-profile')->with('success', 'profile-updated');
     }
 
     /**
@@ -57,5 +59,27 @@ class MyProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function change_password(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+        $user = User::findOrFail(auth()->id());
+
+        if (Hash::check($request->password, $user->password)) {
+            $request->user()->email_verified_at = null;
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+
+            return Redirect::route('my-profile')->with('success', 'Password changed successfully');
+        } else {
+
+            return redirect(route('my-profile').'#devs')->with(['error' => 'Current password is incorrect', 'password_error' => 1])->withInput(['tab' => 'devs']);
+
+        }
     }
 }

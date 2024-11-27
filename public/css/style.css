@@ -52,7 +52,7 @@ video {
     background: var(--dark-blue);
 }
 .back-blue.login-page{
-      height: 100vh;
+      min-height: 100vh;
 }
 .text-black{
   color: #000;
@@ -67,12 +67,12 @@ video {
   background: var(--light-grey);
 }
 .red{
-  color: red;butto
+  color: red;
 }
 
 .white-text
 {
- color: var(--white-text);
+ color: var(--white-text) !important;
 }
 .text-22{
   font-size: 22px;
@@ -229,7 +229,7 @@ span.psw {
   right: 0;
 } */
 
-.nav {
+/* .nav {
   position: fixed;
   top: 0;
   left: 0;
@@ -238,7 +238,7 @@ span.psw {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1;
 
-}
+} */
 header a:hover {
   color: #ffffffb2;
 }
@@ -755,3 +755,54 @@ margin: 20px auto;
 }
 
 /*popup*/
+
+/* SECTION VERTICAL TABS */
+#experienceTab.nav-pills .nav-link.active {
+    color: var(--theme-yellow) !important;
+    background-color: #fff;
+    border-radius: 5px 0px 0px 5px;
+    border-left: 3px solid var(--theme-yellow);
+}
+#experienceTab.nav-pills .nav-link {
+    border-radius: 0px;
+    border-left: 2px solid var(--theme-gray);
+}
+.date-range {
+    letter-spacing: 0.01em;
+    color: #000;
+}
+
+/* STUB  LINKS */
+a {
+    color: #000;
+    transition: 0.3s eas-in-out;
+}
+a:hover {
+    color: var(--theme-yellow);
+}
+.tab-pane h3{
+    color: #000;
+}
+.oneside-corner {
+  border-radius: 0 30px 0px 0;
+}
+.side-left img{
+ width: 100%;
+ max-width: 120px;
+ margin: 0 auto 20px;
+ border-radius: 100px;
+ border: 1px solid #fff;
+padding: 6px;
+}
+#experienceTab {
+  background: #496386;
+  padding-top: 20px;
+}
+#experienceTab .nav-item {
+  width: 100%;
+  margin-left: 16px;
+  margin: 10px 0 10px 20px;
+}
+#experienceTab.nav-pills .nav-link:hover{
+  color: #fff;
+}
