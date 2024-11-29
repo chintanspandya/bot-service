@@ -12,6 +12,6 @@ class Template extends Model
     protected $guarded = ['id'];
 
     public function questions(){
-        return $this->belongsToMany(Question::class, 'templates_questions');
+        return $this->belongsToMany(Questionaire::class, 'templates_questions', 'template_id', 'question_id');
     }
 }

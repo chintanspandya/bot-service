@@ -25,8 +25,15 @@
                             <span class="d-block error mb-4">{{ $message }}</span>
                         @enderror
 
+                        <select name="template_type" id="template_type" class="select-btn dark-grey w-100">
+                            <option value="">Select Template Type</option>
+                            <option value="email" {{ old('template_type') == 'email' ? 'selected' : '' }}>Email</option>
+                            <option value="whatsapp" {{ old('template_type') == 'whatsapp' ? 'selected' : '' }}>Whatsapp</option>
+                            <option value="sms" {{ old('template_type') == 'sms' ? 'selected' : '' }}>SMS</option>
+                        </select>
 
-                    <div class="select-btn dark-grey">
+
+                    {{-- <div class="select-btn dark-grey">
                         <span class="btn-text fw-bold" data-btn-text="Select Template Type">{{ old('template_type') != "" && count(explode(',', (old('template_type')))) > 0 ?  count(explode(',', (old('template_type')))) . ' selected' : 'Select Template Type'}}</span>
                         <span class="arrow-dwn">
                             <i class="uil uil-angle-down"></i>
@@ -58,7 +65,7 @@
                             </span>
                         </li>
 
-                    </ul>
+                    </ul> --}}
 
                     @error('template_type')
                         <span class="d-block error mb-4">{{ $message }}</span>
@@ -87,7 +94,14 @@
 
                     <input type="hidden" name="message" id="message_hidden" value="{{ old('message') }}">
 
-                    <div class="select-btn dark-grey">
+                    <select name="questions" id="questions" class="select-btn dark-grey w-100">
+                        <option value="">Select Questionare</option>
+                        @foreach ($questionaires as $questionaire)
+                            <option value="{{ $questionaire->id }}" {{ old('questions') == $questionaire->id ? 'selected' : '' }}>{{ $questionaire->title }}</option>
+                        @endforeach
+                    </select>
+
+                    {{-- <div class="select-btn dark-grey">
                         <span class="btn-text fw-bold" data-btn-text="Select Questions">{{ old('questions') != "" && count(explode(',', (old('questions')))) > 0 ?  count(explode(',', (old('questions')))) . ' selected' : 'Select Questions'}}</span>
                         <span class="arrow-dwn">
                             <i class="uil uil-angle-down"></i>
@@ -118,7 +132,7 @@
                             </span>
                         </li>
 
-                    </ul>
+                    </ul> --}}
                     @error('questions')
                         <span class="d-block error mb-4">{{ $message }}</span>
                     @enderror
