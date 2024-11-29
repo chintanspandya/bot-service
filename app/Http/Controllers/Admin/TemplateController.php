@@ -8,6 +8,7 @@ use App\Models\Template;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Questionaire;
 use Illuminate\Support\Facades\DB;
 
 class TemplateController extends Controller
@@ -26,7 +27,7 @@ class TemplateController extends Controller
      */
     public function create()
     {
-        $index['questions'] = Question::latest()->get();
+        $index['questionaires'] = Questionaire::latest()->get();
         return view('admin.templates.create', $index);
     }
 
@@ -83,8 +84,8 @@ class TemplateController extends Controller
      */
     public function edit(string $id)
     {
-        $index['template'] = Template::findOrFail($id);
-        $index['questions'] = Question::latest()->get();
+        $index['template'] = Template::with('questions')->findOrFail($id);
+        $index['questionaires'] = Questionaire::latest()->get();
         return view('admin.templates.edit', $index);
     }
 
@@ -93,7 +94,43 @@ class TemplateController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if ($request->message == "<p>&nbsp;</p>") {
+            $request->request->remove('message');
+        }
+        // dd($request->all());
+        $request->validate([
+            'title' => 'required|min:3',
+            'template_type' => 'required',
+            'message' => 'required',
+            'questions' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+
+            $template = Template::findOrFail($id);
+
+            $template->update([
+                'user_id' => auth()->user()->id,
+                'title' => $request->title,
+                'template_type' => $request->template_type,
+                'message' => $request->message,
+            ]);
+
+            if ($request->questions) {
+                $template->questions()->sync(explode(',', $request->questions));
+            } else {
+                $template->questions()->sync([]);
+            }
+
+            DB::commit();
+
+            return redirect()->route('template.index')->with('success', 'Template updated successfully.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Error updating template: ' . $e->getMessage(), [$e]);
+            return redirect()->back()->withErrors(['title' => $e->getMessage()])->withInput();
+        }
     }
 
     /**

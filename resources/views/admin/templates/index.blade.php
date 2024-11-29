@@ -40,7 +40,7 @@
                         <td data-label="Account" class="text-left">{{ $template->title }} </td>
                         <td data-label="Due Date">{{ $template->template_type }} </td>
                         <td data-label="Due Date">{!! $template->message !!} </td>
-                        <td data-label="Amount">{{ json_encode($template->questions->pluck('question')->toArray()) }}</td>
+                        <td data-label="Amount">{{ json_encode($template->questions->pluck('title')->toArray()) }}</td>
                         <td data-label="Amount">{{ $template->contact_no }}</td>
                         <td data-label="Amount">{{ $template->created_at->format('Y-m-d') }}</td>
                         <td>
